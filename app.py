@@ -22,9 +22,14 @@ def main():
         
         file_csv = pd.read_csv(data_file, names=['name', 'url'])
 
+        opener = urllib.request.build_opener()
+        opener.addheaders = [('User-agent', 'Mozilla/5.0')]
+        urllib.request.install_opener(opener)
+
         with zipfile.ZipFile("hello.zip", mode="w") as archive:
             for index, row in file_csv.iterrows():
                 response = request.urlretrieve(row['url'], row['name']+".jpg")
+
                 archive.write(row['name']+".jpg")
                 os.remove(row['name']+".jpg")
 
