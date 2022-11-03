@@ -4,11 +4,13 @@ import pandas as pd
 from selenium import webdriver
 from webdriver_manager.chrome import ChromeDriverManager
 from webdriver_manager.core.utils import ChromeType
+import chromedriver_autoinstaller
 
 import zipfile
 import os
 
 def screenshots():
+    chromedriver_autoinstaller.install()
     st.markdown('#### &#x25A3; Download de Imagens de Screenshots')
 
     st.write('Arquivo CSV contendo os links. Screenshot realizado em 300px de largura e 1.000px de altura.')
