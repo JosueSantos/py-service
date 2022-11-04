@@ -32,21 +32,21 @@ def screenshots():
             for index, row in file_csv.iterrows():
                 my_bar.progress((index + 1) / size_file)
                 filename = ''
-                try:
-                    result = urllib.request.urlopen(row['url'])
-                    al = result.read().decode('utf-8')
-                    d = re.split('<\W*title\W*(.*)</title', al, re.IGNORECASE)
-                    title = d[1]
-                    filename = title + ".jpg"
+                # try:
+                result = urllib.request.urlopen(row['url'])
+                al = result.read().decode('utf-8')
+                d = re.split('<\W*title\W*(.*)</title', al, re.IGNORECASE)
+                title = d[1]
+                filename = title + ".jpg"
 
-                    hti = Html2Image()
-                    hti.screenshot(html_str=al, save_as=filename, size=(300, 550))
+                hti = Html2Image()
+                hti.screenshot(html_str=al, save_as=filename, size=(300, 550))
 
-                    archive.write(filename)
-                    os.remove(filename)
-                except:
-                    with column2:
-                        st.write("NOT FOUND - " + row['url'])
+                archive.write(filename)
+                os.remove(filename)
+                # except:
+                #     with column2:
+                #         st.write("NOT FOUND - " + row['url'])
     
         with column1:
             with open("hello.zip", "rb") as file:
