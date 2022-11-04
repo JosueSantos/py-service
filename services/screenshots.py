@@ -2,15 +2,11 @@ import streamlit as st
 import pandas as pd
 
 from selenium import webdriver
-from webdriver_manager.chrome import ChromeDriverManager
-from webdriver_manager.core.utils import ChromeType
-import chromedriver_autoinstaller
 
 import zipfile
 import os
 
 def screenshots():
-    chromedriver_autoinstaller.install()
     st.markdown('#### &#x25A3; Download de Imagens de Screenshots')
 
     st.write('Arquivo CSV contendo os links. Screenshot realizado em 300px de largura e 1.000px de altura.')
@@ -22,7 +18,10 @@ def screenshots():
         
         file_csv = pd.read_csv(data_file, names=['url'])
 
-        browser = webdriver.Chrome(ChromeDriverManager(chrome_type=ChromeType.GOOGLE).install())
+        try:
+            browser = webdriver.Chrome("driver/chromedriver")
+        except:
+            browser = webdriver.Chrome("driver/chromedriver.exe")
 
         my_bar = st.progress(0)
         size_file = file_csv.size
