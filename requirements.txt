@@ -2,6 +2,5 @@
 
 html2image == 2.0.1
 pandas == 1.2.5
-requests == 2.27.1
 streamlit == 1.11.0
 streamlit_option_menu == 0.3.2

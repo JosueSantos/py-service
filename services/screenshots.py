@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd
 
 import re
-import requests
+import urllib.request
 
 from html2image import Html2Image
 
@@ -21,6 +21,10 @@ def screenshots():
         
         file_csv = pd.read_csv(data_file, names=['url'])
 
+        opener = urllib.request.build_opener()
+        opener.addheaders = [('User-agent', 'Mozilla/5.0')]
+        urllib.request.install_opener(opener)
+
         my_bar = st.progress(0)
         size_file = file_csv.size
         column1, column2 = st.columns(2)
@@ -29,14 +33,14 @@ def screenshots():
                 my_bar.progress((index + 1) / size_file)
                 filename = ''
                 try:
-                    result = requests.get(row['url'])
-                    al = result.text
+                    result = urllib.request.urlopen(row['url'])
+                    al = result.read().decode('utf-8')
                     d = re.split('<\W*title\W*(.*)</title', al, re.IGNORECASE)
                     title = d[1]
                     filename = title + ".jpg"
 
                     hti = Html2Image()
-                    hti.screenshot(url=row['url'], save_as=filename, size=(300, 550))
+                    hti.screenshot(html_str=al, save_as=filename, size=(300, 550))
 
                     archive.write(filename)
                     os.remove(filename)
