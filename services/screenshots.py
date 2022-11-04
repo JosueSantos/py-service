@@ -1,9 +1,10 @@
 import streamlit as st
 import pandas as pd
 
-from selenium import webdriver
-from selenium.webdriver.firefox.service import Service
-from webdriver_manager.firefox import GeckoDriverManager
+import re
+import requests
+
+from html2image import Html2Image
 
 import zipfile
 import os
@@ -20,9 +21,6 @@ def screenshots():
         
         file_csv = pd.read_csv(data_file, names=['url'])
 
-        service = Service(GeckoDriverManager().install())
-        browser = webdriver.Firefox(service=service)
-
         my_bar = st.progress(0)
         size_file = file_csv.size
         column1, column2 = st.columns(2)
@@ -31,13 +29,14 @@ def screenshots():
                 my_bar.progress((index + 1) / size_file)
                 filename = ''
                 try:
-                    browser.get(row['url'])
-                    browser.set_window_rect(width = 300, height = 1000)
-
-                    title = browser.title
+                    result = requests.get(row['url'])
+                    al = result.text
+                    d = re.split('<\W*title\W*(.*)</title', al, re.IGNORECASE)
+                    title = d[1]
                     filename = title + ".jpg"
 
-                    browser.save_screenshot(filename)
+                    hti = Html2Image()
+                    hti.screenshot(url=row['url'], save_as=filename, size=(300, 550))
 
                     archive.write(filename)
                     os.remove(filename)
