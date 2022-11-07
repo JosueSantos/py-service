@@ -30,12 +30,6 @@ def screenshots():
         st.warning('Aguarde o Botão Download aparecer.')
         
         file_csv = pd.read_csv(data_file, names=['url'])
-
-        with webdriver.Chrome(options=options) as driver:
-            url = "https://www.unibet.fr/sport/football/europa-league/europa-league-matchs"
-            driver.get('http://example.com')
-            st.write(driver.page_source)
-            browser = webdriver.Firefox(executable_path='/home/appuser/venv/lib/python3.9/site-packages/seleniumbase/drivers/geckodriver')
         
         my_bar = st.progress(0)
         size_file = file_csv.size
@@ -46,21 +40,20 @@ def screenshots():
                 filename = ''
                 # try:
                 with webdriver.Chrome(options=options) as browser:
-                    browser.get('http://example.com')
-                    st.write(browser.page_source)
-                
                     browser.get(row['url'])
-                    browser.set_window_rect(width = 300, height = 1000)
+                    # browser.set_window_rect(width = 300, height = 1000)
 
                     title = browser.title
                     filename = title + ".jpg"
 
                     st.write(filename)
+                    st.write(filename)
+                    st.write(filename)
 
                     browser.save_screenshot(filename)
 
-                    archive.write(filename)
-                    os.remove(filename)
+                    # archive.write(filename)
+                    # os.remove(filename)
                 # except:
                 #     with column2:
                 #         st.write("NOT FOUND - " + row['url'])
