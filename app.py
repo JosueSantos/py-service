@@ -1,3 +1,4 @@
+import streamlit as st
 import os
 
 @st.experimental_singleton
@@ -7,7 +8,6 @@ def installff():
 
 _ = installff()
 
-import streamlit as st
 from partials.navbar import streamlit_menu
 from services.download_img import download_img
 from services.screenshots import screenshots
