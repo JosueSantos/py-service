@@ -13,7 +13,7 @@ options.add_argument("--no-sandbox")
 options.add_argument("--disable-dev-shm-usage")
 options.add_argument("--disable-gpu")
 options.add_argument("--disable-features=NetworkService")
-options.add_argument("--window-size=300x1000")
+options.add_argument("--window-size=300x600")
 options.add_argument("--disable-features=VizDisplayCompositor")
 
 
@@ -39,12 +39,9 @@ def screenshots():
                 try:
                     with webdriver.Chrome(options=options) as browser:
                         browser.get(row['url'])
-                        # browser.set_window_rect(width = 300, height = 1000)
 
                         title = browser.title
                         filename = title + ".jpg"
-
-                        st.write(filename)
 
                         browser.save_screenshot(filename)
 
@@ -60,7 +57,7 @@ def screenshots():
                 st.download_button(
                     label="Download ZIP",
                     data=file,
-                    file_name='ImagensZIP-pyService.zip',
+                    file_name='ScreenshotZIP-pyService.zip',
                     mime="application/zip",
                 )
     
