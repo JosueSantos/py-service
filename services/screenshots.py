@@ -1,14 +1,12 @@
 import streamlit as st
 import pandas as pd
 
-import re
-import urllib.request
-
-from html2image import Html2Image
+from selenium import webdriver
+from selenium.webdriver.firefox.service import Service
+from webdriver_manager.firefox import GeckoDriverManager
 
 import zipfile
 import os
-
 
 @st.experimental_singleton
 def installff():
@@ -29,33 +27,30 @@ def screenshots():
         
         file_csv = pd.read_csv(data_file, names=['url'])
 
-        opener = urllib.request.build_opener()
-        opener.addheaders = [('User-agent', 'Mozilla/5.0')]
-        urllib.request.install_opener(opener)
+        service = Service(GeckoDriverManager().install())
+        browser = webdriver.Firefox(service=service)
 
         my_bar = st.progress(0)
         size_file = file_csv.size
         column1, column2 = st.columns(2)
         with zipfile.ZipFile("hello.zip", mode="w") as archive:
             for index, row in file_csv.iterrows():
-                my_bar.progress((int(index) + 1) / size_file)
+                my_bar.progress((index + 1) / size_file)
                 filename = ''
-                # try:
-                result = urllib.request.urlopen(row['url'])
-                al = result.read().decode('utf-8')
-                d = re.split('<\W*title\W*(.*)</title', al, re.IGNORECASE)
-                title = d[1]
-                filename = title + ".jpg"
+                try:
+                    browser.get(row['url'])
+                    browser.set_window_rect(width = 300, height = 1000)
 
-                hti = Html2Image()
-                hti.chrome_path = "/home/appuser/venv/lib/python3.9/site-packages/seleniumbase/drivers/chromedriver"
-                hti.screenshot(html_str=al, save_as=filename, size=(300, 550))
+                    title = browser.title
+                    filename = title + ".jpg"
 
-                archive.write(filename)
-                os.remove(filename)
-                # except:
-                #     with column2:
-                #         st.write("NOT FOUND - " + row['url'])
+                    browser.save_screenshot(filename)
+
+                    archive.write(filename)
+                    os.remove(filename)
+                except:
+                    with column2:
+                        st.write("NOT FOUND - " + row['url'])
     
         with column1:
             with open("hello.zip", "rb") as file:
