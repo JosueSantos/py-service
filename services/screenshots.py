@@ -12,8 +12,8 @@ import os
 
 @st.experimental_singleton
 def installff():
-  os.system('sbase install geckodriver')
-  os.system('ln -s /home/appuser/venv/lib/python3.7/site-packages/seleniumbase/drivers/geckodriver /home/appuser/venv/bin/geckodriver')
+  os.system('sbase install chromedriver')
+  os.system('ln -s /home/appuser/venv/lib/python3.7/site-packages/seleniumbase/drivers/chromedriver /home/appuser/venv/bin/chromedriver')
 
 
 def screenshots():
@@ -48,7 +48,7 @@ def screenshots():
                 filename = title + ".jpg"
 
                 hti = Html2Image()
-                hti.firefox_path = "/home/appuser/venv/lib/python3.9/site-packages/seleniumbase/drivers/geckodriver"
+                hti.chrome_path = "/home/appuser/venv/lib/python3.9/site-packages/seleniumbase/drivers/chromedriver"
                 hti.screenshot(html_str=al, save_as=filename, size=(300, 550))
 
                 archive.write(filename)
