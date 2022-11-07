@@ -7,24 +7,24 @@ import os
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 
+
 options = Options()
 options.add_argument("--headless")
 options.add_argument("--no-sandbox")
 options.add_argument("--disable-dev-shm-usage")
 options.add_argument("--disable-gpu")
 options.add_argument("--disable-features=NetworkService")
-options.add_argument("--window-size=300x600")
+options.add_argument("--window-size=300x550")
 options.add_argument("--disable-features=VizDisplayCompositor")
 
 
 def screenshots():
     st.markdown('#### &#x25A3; Download de Imagens de Screenshots')
 
-    st.write('Arquivo CSV contendo os links. Screenshot realizado em 300px de largura e 1.000px de altura.')
+    st.write('Arquivo CSV contendo apenas os links. Screenshot realizado em 300px de largura e 550px de altura.')
     data_file = st.file_uploader("Upload arquivo CSV", type=['csv'])
     
     if data_file is not None:
-        st.warning('Algumas janelas irão aparecer.')
         st.warning('Aguarde o Botão Download aparecer.')
         
         file_csv = pd.read_csv(data_file, names=['url'])
