@@ -6,8 +6,6 @@ import os
 
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
-from selenium.webdriver.support.wait import WebDriverWait
-from selenium.webdriver.common.by import By
 
 options = Options()
 options.add_argument("--headless")
@@ -38,25 +36,23 @@ def screenshots():
             for index, row in file_csv.iterrows():
                 my_bar.progress((index + 1) / size_file)
                 filename = ''
-                # try:
-                with webdriver.Chrome(options=options) as browser:
-                    browser.get(row['url'])
-                    # browser.set_window_rect(width = 300, height = 1000)
+                try:
+                    with webdriver.Chrome(options=options) as browser:
+                        browser.get(row['url'])
+                        # browser.set_window_rect(width = 300, height = 1000)
 
-                    title = browser.title
-                    filename = title + ".jpg"
+                        title = browser.title
+                        filename = title + ".jpg"
 
-                    st.write(filename)
-                    st.write(filename)
-                    st.write(filename)
+                        st.write(filename)
 
-                    browser.save_screenshot(filename)
+                        browser.save_screenshot(filename)
 
-                    # archive.write(filename)
-                    # os.remove(filename)
-                # except:
-                #     with column2:
-                #         st.write("NOT FOUND - " + row['url'])
+                        archive.write(filename)
+                        os.remove(filename)
+                except:
+                    with column2:
+                        st.write("NOT FOUND - " + row['url'])
     
         with column1:
             with open("hello.zip", "rb") as file:
