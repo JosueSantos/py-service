@@ -48,7 +48,7 @@ def screenshots():
                 filename = title + ".jpg"
 
                 hti = Html2Image()
-                hti.firefox_path = "/home/appuser/venv/bin/geckodriver"
+                hti.firefox_path = "/home/appuser/venv/lib/python3.9/site-packages/seleniumbase/drivers/geckodriver"
                 hti.screenshot(html_str=al, save_as=filename, size=(300, 550))
 
                 archive.write(filename)
