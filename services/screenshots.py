@@ -2,8 +2,6 @@ import streamlit as st
 import pandas as pd
 
 from selenium import webdriver
-from selenium.webdriver.firefox.service import Service
-from webdriver_manager.firefox import GeckoDriverManager
 
 import zipfile
 import os
@@ -27,9 +25,8 @@ def screenshots():
         
         file_csv = pd.read_csv(data_file, names=['url'])
 
-        service = Service(GeckoDriverManager().install())
-        browser = webdriver.Firefox(service=service)
-
+        browser = webdriver.Firefox(executable_path='/home/appuser/venv/lib/python3.9/site-packages/seleniumbase/drivers/geckodriver')
+        
         my_bar = st.progress(0)
         size_file = file_csv.size
         column1, column2 = st.columns(2)
