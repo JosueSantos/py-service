@@ -4,6 +4,7 @@ import pandas as pd
 import re
 import urllib.request
 
+from seleniumbase import BaseCase
 from html2image import Html2Image
 
 import zipfile
