@@ -9,7 +9,15 @@ from html2image import Html2Image
 import zipfile
 import os
 
+
+@st.experimental_singleton
+def installff():
+  os.system('sbase install geckodriver')
+  os.system('ln -s /home/appuser/venv/lib/python3.7/site-packages/seleniumbase/drivers/geckodriver /home/appuser/venv/bin/geckodriver')
+
+
 def screenshots():
+    _ = installff()
     st.markdown('#### &#x25A3; Download de Imagens de Screenshots')
 
     st.write('Arquivo CSV contendo os links. Screenshot realizado em 300px de largura e 1.000px de altura.')
@@ -30,7 +38,7 @@ def screenshots():
         column1, column2 = st.columns(2)
         with zipfile.ZipFile("hello.zip", mode="w") as archive:
             for index, row in file_csv.iterrows():
-                my_bar.progress((index + 1) / size_file)
+                my_bar.progress((int(index) + 1) / size_file)
                 filename = ''
                 # try:
                 result = urllib.request.urlopen(row['url'])
@@ -40,6 +48,7 @@ def screenshots():
                 filename = title + ".jpg"
 
                 hti = Html2Image()
+                hti.firefox_path = "/home/appuser/venv/bin/geckodriver"
                 hti.screenshot(html_str=al, save_as=filename, size=(300, 550))
 
                 archive.write(filename)
