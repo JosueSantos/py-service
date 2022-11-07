@@ -27,6 +27,7 @@ def download_img():
                 os.remove(row['name']+".jpg")
 
         with open("hello.zip", "rb") as file:
+            st.balloons()
             st.download_button(
                 label="Download ZIP",
                 data=file,
