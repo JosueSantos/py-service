@@ -4,6 +4,7 @@ import pandas as pd
 from urllib import request
 import zipfile
 import os
+from PyQt5.QtWidgets import QApplication
 
 def download_img():
     st.markdown('#### &#x25A3; Download de Imagens & Renomear')
