@@ -20,20 +20,21 @@ options.add_argument("--disable-features=VizDisplayCompositor")
 
 def screenshots():
     st.markdown('#### &#x25A3; Download de Imagens de Screenshots')
-
-    st.write('Arquivo CSV contendo apenas os links. Screenshot realizado em 300px de largura e 550px de altura.')
-    data_file = st.file_uploader("Upload arquivo CSV", type=['csv'])
+    st.write('Copie os links. Screenshot realizado em 800px de largura e 1280px de altura.')
     
-    if data_file is not None:
+    if st.button('Colar da área de transferência'):
+        global data_file
+        data_file = pd.read_clipboard(names=['url'])
+        st.dataframe(data_file)
+
+    if st.button('Os dados estão corretos?'):
         st.warning('Aguarde o Botão Download aparecer.')
         
-        file_csv = pd.read_csv(data_file, names=['url'])
-        
         my_bar = st.progress(0)
-        size_file = file_csv.size
+        size_file = data_file.size
         column1, column2 = st.columns(2)
         with zipfile.ZipFile("hello.zip", mode="w") as archive:
-            for index, row in file_csv.iterrows():
+            for index, row in data_file.iterrows():
                 my_bar.progress((index + 1) / size_file)
                 filename = ''
                 try:
