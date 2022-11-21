@@ -1,11 +1,14 @@
 <html>
+    <head>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    </head>
     <body>
-        <button onclick='readClipboard()'>Colar da área de transferência</button>
+        <button type="button" class="btn btn-primary" onclick='readClipboard()'>Colar da área de transferência</button>
     
         <script>
         async function readClipboard () {
             if (!navigator.clipboard) {
-                console.log('Clipboard API not available')
+                alert('Clipboard API not available')
                 return
             }
 
@@ -16,7 +19,7 @@
                     dataType: "json",
                 });
             } catch (err) {
-                console.error('Failed to copy!', err)
+                alert('Failed to copy!', err)
             }
         }
 
@@ -42,7 +45,7 @@
 
         function onDataFromPython(event) {
             if (event.data.type !== "streamlit:render") return;
-            console.log(event.data.args);
+            // console.log(event.data.args);
         }
         
         window.addEventListener("message", onDataFromPython);

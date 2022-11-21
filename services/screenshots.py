@@ -1,3 +1,9 @@
+import sys
+if sys.version_info[0] < 3: 
+    from StringIO import StringIO
+else:
+    from io import StringIO
+
 import streamlit as st
 import pandas as pd
 
@@ -6,6 +12,7 @@ import os
 
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
+from template.clipboard import clipboard
 
 
 options = Options()
@@ -20,14 +27,18 @@ options.add_argument("--disable-features=VizDisplayCompositor")
 
 def screenshots():
     st.markdown('#### &#x25A3; Download de Imagens de Screenshots')
-
-    st.write('Arquivo CSV contendo apenas os links. Screenshot realizado em 800px de largura e 1280px de altura.')
-    data_file = st.file_uploader("Upload arquivo CSV", type=['csv'])
+    st.write('Copie os links. Screenshot realizado em 800px de largura e 1280px de altura.')
     
-    if data_file is not None:
-        st.warning('Aguarde o Botão Download aparecer.')
+    value = clipboard()
+    if value:
+        TESTDATA = StringIO(value)
         
-        file_csv = pd.read_csv(data_file, names=['url'])
+        global file_csv
+        file_csv = pd.read_csv(TESTDATA, sep='\t', names=['url'])
+        st.dataframe(file_csv)
+
+    if st.button('Os dados estão corretos?'):
+        st.warning('Aguarde o Botão Download aparecer.')
         
         my_bar = st.progress(0)
         size_file = file_csv.size

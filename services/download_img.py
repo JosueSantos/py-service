@@ -1,19 +1,31 @@
+import sys
+if sys.version_info[0] < 3: 
+    from StringIO import StringIO
+else:
+    from io import StringIO
+
 import streamlit as st
 import urllib.request
 import pandas as pd
 from urllib import request
 import zipfile
 import os
+from template.clipboard import clipboard
 
 def download_img():
-    st.markdown('#### &#x25A3; Download de Imagens via arquivo CSV')
-    st.write('Arquivo separado por vírgulas com a primeira linha contendo o nome e a segunda o link da imagem.')
-    data_file = st.file_uploader("Upload arquivo CSV", type=['csv'])
-    if data_file is not None:
-        file_details = {"FileName":data_file.name, "FileType":data_file.type}
-        st.warning('Aguarde o Botão Download aparecer.')
+    st.markdown('#### &#x25A3; Download de Imagens & Renomea-las')
+    st.write('Copie duas colunas, exatamente com a primeira linha contendo o nome e a segunda o link da imagem.')
+    
+    value = clipboard()
+    if value:
+        TESTDATA = StringIO(value)
         
-        file_csv = pd.read_csv(data_file, names=['name', 'url'])
+        global file_csv
+        file_csv = pd.read_csv(TESTDATA, sep='\t', names=['name', 'url'])
+        st.dataframe(file_csv)
+
+    if st.button('Os dados estão corretos?'):
+        st.warning('Aguarde o Botão Download aparecer.')
 
         opener = urllib.request.build_opener()
         opener.addheaders = [('User-agent', 'Mozilla/5.0')]
@@ -21,7 +33,7 @@ def download_img():
 
         with zipfile.ZipFile("hello.zip", mode="w") as archive:
             for index, row in file_csv.iterrows():
-                response = request.urlretrieve(row['url'], row['name']+".jpg")
+                request.urlretrieve(row['url'], row['name']+".jpg")
 
                 archive.write(row['name']+".jpg")
                 os.remove(row['name']+".jpg")

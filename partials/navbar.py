@@ -6,14 +6,14 @@ menu = [
     "Home",
     "Download de Imagens",
     "Screenshots",
-    "Test",
+    # "Test",
 ]
 
 icons = [
     "house-fill",
     "file-earmark-image",
     "camera-fill",
-    "bug"
+    # "bug"
 ]
 
 def streamlit_menu():
