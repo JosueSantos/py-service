@@ -1,0 +1,58 @@
+<html>
+    <body>
+        <button onclick='readClipboard()'>Colar da área de transferência</button>
+    
+        <script>
+        async function readClipboard () {
+            if (!navigator.clipboard) {
+                console.log('Clipboard API not available')
+                return
+            }
+
+            try {
+                const text = await navigator.clipboard.readText();
+                sendDataToPython({
+                    value: text,
+                    dataType: "json",
+                });
+            } catch (err) {
+                console.error('Failed to copy!', err)
+            }
+        }
+
+        function sendMessageToStreamlitClient(type, data) {
+            var outData = Object.assign({
+                isStreamlitMessage: true,
+                type: type,
+            }, data);
+            window.parent.postMessage(outData, "*");
+        }
+
+        function init() {
+            sendMessageToStreamlitClient("streamlit:componentReady", {apiVersion: 1});
+        }
+
+        function setFrameHeight(height) {
+            sendMessageToStreamlitClient("streamlit:setFrameHeight", {height: height});
+        }
+
+        function sendDataToPython(data) {
+            sendMessageToStreamlitClient("streamlit:setComponentValue", data);
+        }
+
+        function onDataFromPython(event) {
+            if (event.data.type !== "streamlit:render") return;
+            console.log(event.data.args);
+        }
+        
+        window.addEventListener("message", onDataFromPython);
+        init();
+        
+        window.addEventListener("load", function() {
+            window.setTimeout(function() {
+                setFrameHeight(document.documentElement.clientHeight)
+            }, 0);
+        });
+    </script>
+  </body>
+</html>

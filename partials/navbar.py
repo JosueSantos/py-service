@@ -5,13 +5,15 @@ from streamlit_option_menu import option_menu
 menu = [
     "Home",
     "Download de Imagens",
-    "Screenshots"
+    "Screenshots",
+    "Test",
 ]
 
 icons = [
     "house-fill",
     "file-earmark-image",
-    "camera-fill"
+    "camera-fill",
+    "bug"
 ]
 
 def streamlit_menu():
