@@ -15,7 +15,7 @@ import pyperclip
 from slugify import slugify
 
 
-def test():
+def slug():
     st.markdown('#### &#x25A3; Slug de colunas')
     st.write('Copie duas colunas, confira o resultado e copie para a área de transferência.')
     

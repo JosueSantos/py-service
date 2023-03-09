@@ -3,6 +3,7 @@ import streamlit as st
 from partials.navbar import streamlit_menu
 from services.download_img import download_img
 from services.screenshots import screenshots
+from services.slug import slug
 from services.test import test
 
 
@@ -20,6 +21,8 @@ def main():
         download_img()
     if selected == "Screenshots":
         screenshots()
+    if selected == "Slug":
+        slug()
     if selected == "Test":
         test()
 
