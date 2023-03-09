@@ -28,12 +28,12 @@ def slug():
         df['slug'] = data_file['txt1'].map(str) + '-' + data_file['txt2'].map(str)
         df['slug'] = df['slug'].map(slugify)
         
-        text = df.to_string(index=False, header=False)
-        clipboard_copy(text=text)
-
         st.text("Origem")
         st.dataframe(data_file)
 
         st.text("Slug")
         st.dataframe(df)
 
+        text = df.to_string(index=False, header=False)
+        if clipboard_copy(text=text):
+            st.info("Copiado!")
