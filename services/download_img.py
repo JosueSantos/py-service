@@ -1,22 +1,26 @@
 import sys
+
 if sys.version_info[0] < 3: 
     from StringIO import StringIO
 else:
     from io import StringIO
 
-import streamlit as st
-import urllib.request
-import pandas as pd
-from urllib import request
-import zipfile
 import os
-from template.clipboard import clipboard
+import urllib.request
+import zipfile
+from urllib import request
+
+import pandas as pd
+import streamlit as st
+
+from template.clipboard_paste import clipboard_paste
+
 
 def download_img():
     st.markdown('#### &#x25A3; Download de Imagens & Renomea-las')
     st.write('Copie duas colunas, exatamente com a primeira linha contendo o nome e a segunda o link da imagem.')
     
-    value = clipboard()
+    value = clipboard_paste()
     if value:
         TESTDATA = StringIO(value)
         

@@ -1,19 +1,19 @@
 import sys
+
 if sys.version_info[0] < 3: 
     from StringIO import StringIO
 else:
     from io import StringIO
 
-import streamlit as st
-import pandas as pd
-
-import zipfile
 import os
+import zipfile
 
+import pandas as pd
+import streamlit as st
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
-from template.clipboard import clipboard
 
+from template.clipboard_paste import clipboard_paste
 
 options = Options()
 options.add_argument("--headless")
@@ -29,7 +29,7 @@ def screenshots():
     st.markdown('#### &#x25A3; Download de Imagens de Screenshots')
     st.write('Copie os links. Screenshot realizado em 800px de largura e 1280px de altura.')
     
-    value = clipboard()
+    value = clipboard_paste()
     if value:
         TESTDATA = StringIO(value)
         
