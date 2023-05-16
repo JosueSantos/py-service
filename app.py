@@ -1,6 +1,7 @@
 import streamlit as st
 
 from partials.navbar import streamlit_menu
+from services.data_card import data_card
 from services.download_img import download_img
 from services.screenshots import screenshots
 from services.slug import slug
@@ -23,6 +24,8 @@ def main():
         screenshots()
     if selected == "Slug":
         slug()
+    if selected == "Dados de Cartões":
+        data_card()
     if selected == "Test":
         test()
 

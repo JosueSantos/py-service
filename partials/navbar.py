@@ -7,6 +7,7 @@ menu = [
     "Download de Imagens",
     "Screenshots",
     "Slug",
+    "Dados de Cartões",
     # "Test",
 ]
 
@@ -15,6 +16,7 @@ icons = [
     "file-earmark-image",
     "camera-fill",
     "bookmark-dash-fill",
+    "credit-card",
     # "bug",
 ]
 

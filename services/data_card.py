@@ -5,7 +5,7 @@ import streamlit as st
 from bs4 import BeautifulSoup
 
 
-def test():
+def data_card():
     st.markdown('#### &#x25A3; Raspagem de dados')
     st.write('Busca de informações sobre cartões no site https://creditis.com.br/')
     
