@@ -40,6 +40,7 @@ def data_card():
 
                 name = cardinfo.select_one("h1").get_text()
                 description = cardinfo.select_one("div div p").get_text()
+                img_path = "https://creditis.com.br" + cardinfo.select_one("img")["src"]
                 
                 perfil = cardperfil.select_one("div div h5").get_text()
                 informations = cardperfil.select_one("div.flex-column")
@@ -87,6 +88,7 @@ def data_card():
                 row = {
                     "Nome do Cartão": name,
                     "Descrição": description,
+                    "Imagem_Path": img_path,
                     "URL": URL,
                     "Perfil": perfil
                 }
