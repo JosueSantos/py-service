@@ -3,6 +3,7 @@ import pandas as pd
 import requests
 import streamlit as st
 from bs4 import BeautifulSoup
+import lxml
 
 
 def data_card():
